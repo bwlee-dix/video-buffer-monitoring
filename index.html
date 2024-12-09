@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <title>Video Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" autoplay muted loop playsinline draggable="false" preload="none">
+      <source src="./video-sample-02.mp4" type="video/mp4" />
+    </video>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const video = document.getElementById("video");
+
+        // 1초마다 버퍼 상태 및 메모리 사용량 확인
+        setInterval(() => {
+          const buffered = video.buffered;
+          const currentTime = video.currentTime;
+
+          let bufferVisualization = "------------------------------------------------------\n";
+          let times = [];
+
+          // 버퍼링 구간을 계산하여 시각적으로 텍스트 출력
+          for (let i = 0; i < buffered.length; i++) {
+            const start = buffered.start(i);
+            const end = buffered.end(i);
+            times.push({ start, end });
+
+            // '='로 표시한 버퍼 구간 시각화
+            const bufferRange =
+              " ".repeat(Math.floor((start / video.duration) * 50)) +
+              "=".repeat(Math.floor(((end - start) / video.duration) * 50));
+            bufferVisualization += `|${bufferRange}|\n`;
+          }
+
+          // 콘솔 출력: 버퍼링 구간을 '=' 기호로 시각화
+          console.log(bufferVisualization);
+
+          // 추가로 버퍼 구간에 대한 텍스트 표시
+          let timeString = "";
+          times.forEach(({ start, end }) => {
+            timeString += `${start.toFixed(2)} - ${end.toFixed(2)}초 | `;
+          });
+          console.log("버퍼링 구간:", timeString);
+
+          // 메모리 사용량 추적 (크롬 기반 브라우저에서만 지원)
+          if (performance.memory) {
+            const memoryInfo = performance.memory;
+            console.log(`Total JS Heap Size: ${memoryInfo.totalJSHeapSize / (1024 * 1024)} MB`);
+            console.log(`Used JS Heap Size: ${memoryInfo.usedJSHeapSize / (1024 * 1024)} MB`);
+            console.log(`Limit JS Heap Size: ${memoryInfo.jsHeapSizeLimit / (1024 * 1024)} MB`);
+          } else {
+            console.log("브라우저에서 performance.memory를 지원하지 않습니다.");
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
