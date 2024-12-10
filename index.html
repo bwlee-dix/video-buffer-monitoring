@@ -3,66 +3,313 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <title>Video Test</title>
+    <title>Video Performance Monitor</title>
     <style>
       body {
         margin: 0;
         padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .video-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
+
+      .status {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 20px;
+        background-color: #eee;
+        border-radius: 5px;
+        margin: 5px 0;
+      }
+
+      .progress {
+        height: 100%;
+        background-color: #4caf50;
+        border-radius: 5px;
+        transition: width 0.3s ease;
+      }
+
+      .status {
+        margin-top: 10px;
+        font-size: 14px;
+
+        .info {
+          display: flex;
+          flex-direction: row;
+          gap: 24px;
+
+          .row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .sub-info {
+              margin-top: 16px;
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+            }
+          }
+        }
       }
     </style>
   </head>
   <body>
-    <video id="video" autoplay muted loop playsinline draggable="false" preload="none">
-      <source src="./video-sample-02.mp4" type="video/mp4" />
-    </video>
+    <div class="video-container">
+      <video id="video01" autoplay muted loop>
+        <source src="./video-sample-01.mp4" type="video/mp4" />
+      </video>
+      <video id="video02" autoplay muted loop>
+        <source src="./video-sample-02.mp4" type="video/mp4" />
+      </video>
+      <video id="video03" autoplay muted loop>
+        <source src="./video-sample-03.mp4" type="video/mp4" />
+      </video>
+      <video id="video04" autoplay muted loop>
+        <source src="./video-sample-04.mp4" type="video/mp4" />
+      </video>
+      <video id="video05" autoplay muted loop>
+        <source src="./video-sample-05.mp4" type="video/mp4" />
+      </video>
+      <video id="video06" autoplay muted loop>
+        <source src="./video-sample-06.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="status" id="status">
+      <h3>Performance Monitor</h3>
+      <div class="info">
+        <div class="row">
+          <div id="video01-status">
+            <h3>Video 1</h3>
+            <span> Buffer: </span><span id="video01-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video01-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video01-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>23.3</b> MB</li>
+              <li>Duration: <b>00:17</b></li>
+            </div>
+          </div>
+
+          <div id="video02-status">
+            <h3>Video 2</h3>
+            <span> Buffer: </span><span id="video02-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video02-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video02-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>102.7</b> MB</li>
+              <li>Duration: <b>00:30</b></li>
+            </div>
+          </div>
+
+          <div id="video03-status">
+            <h3>Video 3</h3>
+            <span> Buffer: </span><span id="video03-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video03-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video03-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>79.6</b> MB</li>
+              <li>Duration: <b>00:42</b></li>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div id="video04-status">
+            <h3>Video 4</h3>
+            <span> Buffer: </span><span id="video04-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video04-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video04-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>55.9</b> MB</li>
+              <li>Duration: <b>00:12</b></li>
+            </div>
+          </div>
+
+          <div id="video05-status">
+            <h3>Video 5</h3>
+            <span> Buffer: </span><span id="video05-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video05-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video05-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>38</b> MB</li>
+              <li>Duration: <b>00:25</b></li>
+            </div>
+          </div>
+
+          <div id="video06-status">
+            <h3>Video 6</h3>
+            <span> Buffer: </span><span id="video06-buffer">0%</span>
+            <div class="progress-bar">
+              <div id="video06-buffer-bar" class="progress" style="width: 0%"></div>
+            </div>
+            <div class="memory-status" id="video06-memory"></div>
+            <div class="sub-info">
+              <li>File Size: <b>23.3</b> MB</li>
+              <li>Duration: <b>00:17</b></li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const video = document.getElementById("video");
+        const videos = [
+          document.getElementById("video01"),
+          document.getElementById("video02"),
+          document.getElementById("video03"),
+          document.getElementById("video04"),
+          document.getElementById("video05"),
+          document.getElementById("video06"),
+        ];
 
-        // 1초마다 버퍼 상태 및 메모리 사용량 확인
-        setInterval(() => {
-          const buffered = video.buffered;
-          const currentTime = video.currentTime;
+        const bufferElems = [
+          document.getElementById("video01-buffer"),
+          document.getElementById("video02-buffer"),
+          document.getElementById("video03-buffer"),
+          document.getElementById("video04-buffer"),
+          document.getElementById("video05-buffer"),
+          document.getElementById("video06-buffer"),
+        ];
 
-          let bufferVisualization = "------------------------------------------------------\n";
-          let times = [];
+        const bufferBarElems = [
+          document.getElementById("video01-buffer-bar"),
+          document.getElementById("video02-buffer-bar"),
+          document.getElementById("video03-buffer-bar"),
+          document.getElementById("video04-buffer-bar"),
+          document.getElementById("video05-buffer-bar"),
+          document.getElementById("video06-buffer-bar"),
+        ];
 
-          // 버퍼링 구간을 계산하여 시각적으로 텍스트 출력
-          for (let i = 0; i < buffered.length; i++) {
-            const start = buffered.start(i);
-            const end = buffered.end(i);
-            times.push({ start, end });
+        function updateBufferStatus(video, index) {
+          try {
+            const buffered = video.buffered;
+            console.log(`Video ${index + 1} buffered:`, buffered);
 
-            // '='로 표시한 버퍼 구간 시각화
-            const bufferRange =
-              " ".repeat(Math.floor((start / video.duration) * 50)) +
-              "=".repeat(Math.floor(((end - start) / video.duration) * 50));
-            bufferVisualization += `|${bufferRange}|\n`;
+            let bufferPercentage = 0;
+
+            video.preload = "auto";
+
+            if (buffered.length > 0 && video.duration > 0) {
+              let totalBuffered = 0;
+
+              for (let i = 0; i < buffered.length; i++) {
+                totalBuffered += buffered.end(i) - buffered.start(i);
+              }
+
+              bufferPercentage = (totalBuffered / video.duration) * 100;
+            }
+
+            console.log(`Video ${index + 1} buffer percentage:`, bufferPercentage);
+
+            // 명시적으로 DOM 요소 업데이트
+            requestAnimationFrame(() => {
+              if (bufferElems[index]) {
+                bufferElems[index].textContent = `${bufferPercentage.toFixed(2)}%`;
+              }
+              if (bufferBarElems[index]) {
+                bufferBarElems[index].style.width = `${bufferPercentage}%`;
+              }
+            });
+          } catch (error) {
+            console.error(`Error updating buffer for video ${index + 1}:`, error);
           }
+        }
 
-          // 콘솔 출력: 버퍼링 구간을 '=' 기호로 시각화
-          console.log(bufferVisualization);
+        videos.forEach((video, index) => {
+          if (!video) return;
 
-          // 추가로 버퍼 구간에 대한 텍스트 표시
-          let timeString = "";
-          times.forEach(({ start, end }) => {
-            timeString += `${start.toFixed(2)} - ${end.toFixed(2)}초 | `;
+          video.preload = "auto";
+
+          ["loadstart", "progress", "loadeddata", "canplay", "canplaythrough"].forEach((eventName) => {
+            video.addEventListener(eventName, () => {
+              console.log(`${eventName} event triggered for video ${index + 1}`);
+              updateBufferStatus(video, index);
+            });
           });
-          console.log("버퍼링 구간:", timeString);
 
-          // 메모리 사용량 추적 (크롬 기반 브라우저에서만 지원)
+          const bufferInterval = setInterval(() => {
+            if (video.readyState > 0) {
+              updateBufferStatus(video, index);
+            }
+          }, 500); // 0.5초마다 체크
+
+          video.addEventListener("canplaythrough", () => {
+            clearInterval(bufferInterval);
+          });
+        });
+
+        // 메모리 사용량 추적
+        function updateMemoryStatus() {
           if (performance.memory) {
             const memoryInfo = performance.memory;
-            console.log(`Total JS Heap Size: ${memoryInfo.totalJSHeapSize / (1024 * 1024)} MB`);
-            console.log(`Used JS Heap Size: ${memoryInfo.usedJSHeapSize / (1024 * 1024)} MB`);
-            console.log(`Limit JS Heap Size: ${memoryInfo.jsHeapSizeLimit / (1024 * 1024)} MB`);
-          } else {
-            console.log("브라우저에서 performance.memory를 지원하지 않습니다.");
+            const memoryStatus = `
+        Total JS Heap: ${Math.round(memoryInfo.totalJSHeapSize / (1024 * 1024))} MB<br />
+        Used JS Heap: ${Math.round(memoryInfo.usedJSHeapSize / (1024 * 1024))} MB<br />
+        Heap Size Limit: ${Math.round(memoryInfo.jsHeapSizeLimit / (1024 * 1024))} MB
+      `;
+            document.querySelectorAll(".memory-status").forEach((elem) => {
+              elem.innerHTML = memoryStatus;
+            });
           }
-        }, 1000);
+        }
+
+        // 메모리 상태 업데이트 인터벌 설정
+        setInterval(updateMemoryStatus, 1000);
       });
+
+      // const videoFileSizes = [
+      //   150000000, // 비디오 1 크기 (150MB)
+      //   200000000, // 비디오 2 크기 (200MB)
+      //   180000000, // 비디오 3 크기 (180MB)
+      //   220000000, // 비디오 4 크기 (220MB)
+      //   170000000, // 비디오 5 크기 (170MB)
+      //   160000000, // 비디오 6 크기 (160MB)
+      // ];
+
+      // function updateFileSizeDisplay(fileSize, index) {
+      //   const fileSizeElem = document.getElementById(`video${index + 1}-file-size`);
+      //   if (fileSizeElem) {
+      //     const sizeInMB = (fileSize / (1024 * 1024)).toFixed(2); // MB로 변환
+      //     fileSizeElem.textContent = `File Size: ${sizeInMB} MB`;
+      //   }
+      // }
+
+      // videos.forEach((video, index) => {
+      //   const fileSize = videoFileSizes[index];
+      //   updateFileSizeDisplay(fileSize, index);
+      // });
     </script>
   </body>
 </html>
