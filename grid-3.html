@@ -3,12 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>[Column 6] Video Performance Monitor</title>
+    <title>[Grid 3] Video Performance Monitor</title>
     <style>
       body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
+      }
+
+      .video-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        height: 100vh;
+        width: 100vw;
+        box-sizing: border-box;
+
+        .video-wrapper {
+          display: flex;
+          position: relative;
+
+          .video-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            font-size: 18px;
+            border-radius: 3px;
+            z-index: 10;
+          }
+
+          video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
       }
 
       .status {
@@ -40,35 +71,6 @@
               flex-direction: column;
               gap: 4px;
             }
-          }
-        }
-      }
-
-      .video-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-
-        .video-wrapper {
-          display: flex;
-          position: relative;
-
-          .video-label {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px 10px;
-            font-size: 18px;
-            border-radius: 3px;
-            z-index: 10;
-          }
-
-          video {
-            width: 100%;
-            height: 100%;
           }
         }
       }
@@ -108,24 +110,6 @@
           <source src="./video-sample-03.mp4" type="video/mp4" />
         </video>
         <div class="video-label">Video 03</div>
-      </div>
-      <div class="video-wrapper">
-        <video id="video04" autoplay muted loop>
-          <source src="./video-sample-04.mp4" type="video/mp4" />
-        </video>
-        <div class="video-label">Video 04</div>
-      </div>
-      <div class="video-wrapper">
-        <video id="video05" autoplay muted loop>
-          <source src="./video-sample-05.mp4" type="video/mp4" />
-        </video>
-        <div class="video-label">Video 05</div>
-      </div>
-      <div class="video-wrapper">
-        <video id="video06" autoplay muted loop>
-          <source src="./video-sample-06.mp4" type="video/mp4" />
-        </video>
-        <div class="video-label">Video 06</div>
       </div>
     </div>
 
@@ -170,47 +154,6 @@
             <div class="sub-info">
               <li>File Size: <b>79.6</b> MB</li>
               <li>Duration: <b>00:42</b></li>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div id="video04-status">
-            <h3>Video 4</h3>
-            <span> Buffer: </span><span id="video04-buffer">0%</span>
-            <div class="progress-bar">
-              <div id="video04-buffer-bar" class="progress" style="width: 0%"></div>
-            </div>
-            <div class="memory-status" id="video04-memory"></div>
-            <div class="sub-info">
-              <li>File Size: <b>55.9</b> MB</li>
-              <li>Duration: <b>00:12</b></li>
-            </div>
-          </div>
-
-          <div id="video05-status">
-            <h3>Video 5</h3>
-            <span> Buffer: </span><span id="video05-buffer">0%</span>
-            <div class="progress-bar">
-              <div id="video05-buffer-bar" class="progress" style="width: 0%"></div>
-            </div>
-            <div class="memory-status" id="video05-memory"></div>
-            <div class="sub-info">
-              <li>File Size: <b>38</b> MB</li>
-              <li>Duration: <b>00:25</b></li>
-            </div>
-          </div>
-
-          <div id="video06-status">
-            <h3>Video 6</h3>
-            <span> Buffer: </span><span id="video06-buffer">0%</span>
-            <div class="progress-bar">
-              <div id="video06-buffer-bar" class="progress" style="width: 0%"></div>
-            </div>
-            <div class="memory-status" id="video06-memory"></div>
-            <div class="sub-info">
-              <li>File Size: <b>23.3</b> MB</li>
-              <li>Duration: <b>00:17</b></li>
             </div>
           </div>
         </div>
@@ -297,14 +240,13 @@
             if (video.readyState > 0) {
               updateBufferStatus(video, index);
             }
-          }, 500); // 0.5초마다 체크
+          }, 500);
 
           video.addEventListener("canplaythrough", () => {
             clearInterval(bufferInterval);
           });
         });
 
-        // 메모리 사용량 추적
         function updateMemoryStatus() {
           if (performance.memory) {
             const memoryInfo = performance.memory;
@@ -319,7 +261,6 @@
           }
         }
 
-        // 메모리 상태 업데이트 인터벌 설정
         setInterval(updateMemoryStatus, 1000);
       });
     </script>
